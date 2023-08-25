@@ -73,4 +73,14 @@ router.patch("/usuario", async (req, res) => {
   }
 });
 
+router.get("/usuarios", async (req, res) => {
+  console.log("Rota GET/usuarios solicitada");
+  try {
+    const usuarios = await selectUsuarios();
+    res.json(usuarios);
+  } catch (error) {
+    res.status(error.status || 500).json({ message: error.message || "Erro!" });
+  }
+});
+
 export default router;
