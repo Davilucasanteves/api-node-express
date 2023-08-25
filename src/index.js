@@ -8,7 +8,7 @@ const port = 3000;                  // Define a porta
 
 app.get("/", (req, res) => {
   res.json({
-    message: "API para CRUD usuario: link_gitgub",
+    message: "API para CRUD usuario: https://github.com/Davilucasanteves/api-node-express.git",
   });
 });
 
