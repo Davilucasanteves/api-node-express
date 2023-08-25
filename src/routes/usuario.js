@@ -1,31 +1,19 @@
-import express from "express";      // Requisição do pacote do express
-const app = express();              // Instancia o Express
-const port = 3000;                  // Define a porta
+//src/routes/usuario.js
+import { Router } from "express";
 
-app.get("/", (req, res) => {        // Cria a rota da raiz do projeto
-  res.json({
-    nome: "Daví lucas",      // Substitua pelo seu nome
-  });
-  console.log("Rota / solicitada");
-});
+import {
+  selectUsuario,
+  selectUsuarios,
+  insertUsuario,
+  deleteUsuario,
+  updateUsuario,
+} from "../db/index.js";
 
-app.listen(port, () => {            // Um socket para "escutar" as requisições
-  console.log(`Serviço escutando na porta:  ${port}`);
-});
+//src/routes/usuario.js
+const router = Router();
 
-//index.js
-import dotenv from "dotenv";
-
-dotenv.config();
-
-
-import { selectUsuarios, selectUsuario, insertUsuario, deleteUsuario, updateUsuario } from "./bd.js";
-
-//index.js
-app.use(express.json());
-
-app.get("/usuarios", async (req, res) => {
-  console.log("Rota GET/usuarios solicitada");
+router.get("/usuario", async (req, res) => {    //end points (router e app!)
+  console.log(`Rota GET /usuarios solicitada pelo usuario ${req.userId}`);
   try {
     const usuarios = await selectUsuarios();
     res.json(usuarios);
@@ -34,8 +22,7 @@ app.get("/usuarios", async (req, res) => {
   }
 });
 
-//index.js
-app.get("/usuario/:id", async (req, res) => {
+router.get("/usuario/:id", async (req, res) => {
   console.log("Rota GET /usuario solicitada");
   try {
     const usuario = await selectUsuario(req.params.id);
@@ -46,8 +33,8 @@ app.get("/usuario/:id", async (req, res) => {
   }
 });
 
-//index.js
-app.post("/usuario", async (req, res) => {
+
+router.post("/usuario", async (req, res) => {
   console.log("Rota POST /usuario solicitada");
   try {
     await insertUsuario(req.body);
@@ -58,7 +45,7 @@ app.post("/usuario", async (req, res) => {
 });
 
 //index.js
-app.delete("/usuario/:id", async (req, res) => {
+router.delete("/usuario/:id", async (req, res) => {
   console.log("Rota DELETE /usuario solicitada");
   try {
     const usuario = await selectUsuario(req.params.id);
@@ -72,7 +59,7 @@ app.delete("/usuario/:id", async (req, res) => {
 });
 
 //index.js
-app.patch("/usuario", async (req, res) => {
+router.patch("/usuario", async (req, res) => {
   console.log("Rota PATCH /usuario solicitada");
   try {
     const usuario = await selectUsuario(req.body.id);
@@ -86,4 +73,4 @@ app.patch("/usuario", async (req, res) => {
   }
 });
 
-//teste
+export default router;
