@@ -20,8 +20,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 
-import { selectUsuarios, selectUsuario, insertUsuario, deleteUsuario, updateUsuario } from "./db/index.js";
-
 //index.js
 app.use(express.json());
 app.use(roteadorUsuario);  //routerUsuario
